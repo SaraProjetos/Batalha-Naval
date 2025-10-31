@@ -1,0 +1,110 @@
+#include <stdio.h>
+
+/*
+    Programa: Batalha Naval - Nível Aventureiro
+    Objetivo: Criar um tabuleiro 10x10 com quatro navios
+              (dois horizontais/verticais e dois diagonais)
+    Autor: [Seu Nome]
+    Data: [Data de hoje]
+*/
+
+#define TAM_TABULEIRO 10
+#define TAM_NAVIO 3
+#define AGUA 0
+#define NAVIO 3
+
+int main() {
+    // ==========================
+    // 1. DECLARAÇÃO DE VARIÁVEIS
+    // ==========================
+    int tabuleiro[TAM_TABULEIRO][TAM_TABULEIRO];
+
+    // ==========================
+    // 2. INICIALIZAR O TABULEIRO
+    // ==========================
+    for (int i = 0; i < TAM_TABULEIRO; i++) {
+        for (int j = 0; j < TAM_TABULEIRO; j++) {
+            tabuleiro[i][j] = AGUA; // preenche tudo com água
+        }
+    }
+
+    // ==========================
+    // 3. POSICIONAR OS NAVIOS
+    // ==========================
+    // Tamanho dos navios: 3 posições cada
+    // Todos representados com valor 3 na matriz
+
+    // --- Navio 1: Horizontal ---
+    int linhaH = 2;
+    int colunaH = 1;
+
+    if (colunaH + TAM_NAVIO <= TAM_TABULEIRO) {
+        for (int i = 0; i < TAM_NAVIO; i++) {
+            if (tabuleiro[linhaH][colunaH + i] == AGUA)
+                tabuleiro[linhaH][colunaH + i] = NAVIO;
+        }
+    }
+
+    // --- Navio 2: Vertical ---
+    int linhaV = 5;
+    int colunaV = 4;
+
+    if (linhaV + TAM_NAVIO <= TAM_TABULEIRO) {
+        for (int i = 0; i < TAM_NAVIO; i++) {
+            if (tabuleiro[linhaV + i][colunaV] == AGUA)
+                tabuleiro[linhaV + i][colunaV] = NAVIO;
+        }
+    }
+
+    // --- Navio 3: Diagonal Principal (↘) ---
+    // Linha e coluna aumentam simultaneamente
+    int linhaD1 = 0;
+    int colunaD1 = 0;
+
+    if (linhaD1 + TAM_NAVIO <= TAM_TABULEIRO && colunaD1 + TAM_NAVIO <= TAM_TABULEIRO) {
+        for (int i = 0; i < TAM_NAVIO; i++) {
+            if (tabuleiro[linhaD1 + i][colunaD1 + i] == AGUA)
+                tabuleiro[linhaD1 + i][colunaD1 + i] = NAVIO;
+        }
+    }
+
+    // --- Navio 4: Diagonal Secundária (↙) ---
+    // Linha aumenta enquanto coluna diminui
+    int linhaD2 = 4;
+    int colunaD2 = 9;
+
+    if (linhaD2 + TAM_NAVIO <= TAM_TABULEIRO && colunaD2 - TAM_NAVIO >= -1) {
+        for (int i = 0; i < TAM_NAVIO; i++) {
+            if (tabuleiro[linhaD2 + i][colunaD2 - i] == AGUA)
+                tabuleiro[linhaD2 + i][colunaD2 - i] = NAVIO;
+        }
+    }
+
+    // ==========================
+    // 4. EXIBIR O TABULEIRO
+    // ==========================
+    printf("\n=== TABULEIRO DE BATALHA NAVAL (Nível Aventureiro) ===\n\n");
+
+    // Cabeçalho de colunas
+    printf("   ");
+    for (int c = 0; c < TAM_TABULEIRO; c++) {
+        printf("%2d ", c);
+    }
+    printf("\n");
+
+    // Linha separadora
+    printf("   ---------------------------------------------\n");
+
+    // Impressão da matriz
+    for (int i = 0; i < TAM_TABULEIRO; i++) {
+        printf("%2d|", i); // número da linha
+        for (int j = 0; j < TAM_TABULEIRO; j++) {
+            printf(" %d ", tabuleiro[i][j]);
+        }
+        printf("\n");
+    }
+
+    printf("\nLegenda: 0 = Água | 3 = Navio\n");
+
+    return 0;
+}
